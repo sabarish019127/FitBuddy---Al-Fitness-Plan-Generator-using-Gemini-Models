@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FitBuddy - Your Fitness Plan</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7f6;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .welcome {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .welcome h2 {
+            color: #11998e;
+            margin-bottom: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+        }
+
+        .info-card .label {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .info-card .value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #11998e;
+        }
+
+        .nutrition {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .nutrition-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+        }
+
+        .nutrition-card h3 {
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .nutrition-card .number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #11998e;
+        }
+
+        .plan-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .plan-section h2 {
+            color: #11998e;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e5e5e5;
+            padding-bottom: 10px;
+        }
+
+        .plan-text {
+            white-space: pre-wrap;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 13px 25px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #11998e;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #333;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .empty {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 15px;
+            color: #777;
+        }
+
+        @media (max-width: 600px) {
+
+            .header h1 {
+                font-size: 26px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .plan-section {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>💪 FitBuddy</h1>
+
+        <p>Your Personalized AI Fitness Plan</p>
+
+    </div>
+
+
+    <div class="container">
+
+        {% if plan %}
+
+        <!-- WELCOME -->
+
+        <div class="welcome">
+
+            <h2>
+                Welcome, {{ plan["name"] }}! 👋
+            </h2>
+
+            <p>
+                Your personalized fitness plan has been generated successfully.
+            </p>
+
+        </div>
+
+
+        <!-- USER INFORMATION -->
+
+        <div class="info-grid">
+
+            <div class="info-card">
+
+                <div class="label">
+                    Age
+                </div>
+
+                <div class="value">
+                    {{ plan["age"] }} years
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="label">
+                    Gender
+                </div>
+
+                <div class="value">
+                    {{ plan["gender"] }}
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="label">
+                    Height
+                </div>
+
+                <div class="value">
+                    {{ plan["height_cm"] }} cm
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="label">
+                    Weight
+                </div>
+
+                <div class="value">
+                    {{ plan["weight_kg"] }} kg
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="label">
+                    Goal
+                </div>
+
+                <div class="value">
+                    {{ plan["goal"] }}
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="label">
+                    Activity Level
+                </div>
+
+                <div class="value">
+                    {{ plan["activity_level"] }}
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="label">
+                    Workout Days
+                </div>
+
+                <div class="value">
+                    {{ plan["workout_days"] }} days/week
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="label">
+                    Equipment
+                </div>
+
+                <div class="value">
+                    {{ plan["equipment"] }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NUTRITION -->
+
+        <div class="nutrition">
+
+            <div class="nutrition-card">
+
+                <h3>🔥 Daily Calories</h3>
+
+                <div class="number">
+                    {{ plan["calories"] }}
+                </div>
+
+                <p>kcal/day</p>
+
+            </div>
+
+
+            <div class="nutrition-card">
+
+                <h3>🥩 Protein</h3>
+
+                <div class="number">
+                    {{ plan["protein_g"] }}
+                </div>
+
+                <p>grams/day</p>
+
+            </div>
+
+
+            <div class="nutrition-card">
+
+                <h3>🍚 Carbohydrates</h3>
+
+                <div class="number">
+                    {{ plan["carbs_g"] }}
+                </div>
+
+                <p>grams/day</p>
+
+            </div>
+
+
+            <div class="nutrition-card">
+
+                <h3>🥑 Fat</h3>
+
+                <div class="number">
+                    {{ plan["fat_g"] }}
+                </div>
+
+                <p>grams/day</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FITNESS PLAN -->
+
+        <div class="plan-section">
+
+            <h2>
+                🏋️ Your Personalized Fitness Plan
+            </h2>
+
+            <div class="plan-text">
+{{ plan["plan_text"] }}
+            </div>
+
+        </div>
+
+
+        <!-- ALLERGIES -->
+
+        {% if plan["allergies"] %}
+
+        <div class="plan-section">
+
+            <h2>
+                ⚠️ Allergies / Restrictions
+            </h2>
+
+            <p>
+                {{ plan["allergies"] }}
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <a href="/" class="btn btn-primary">
+                ← Generate New Plan
+            </a>
+
+            <button
+                onclick="window.print()"
+                class="btn btn-secondary">
+                🖨️ Print / Save PDF
+            </button>
+
+        </div>
+
+
+        {% else %}
+
+        <!-- NO PLAN -->
+
+        <div class="empty">
+
+            <h2>⚠️ Plan Not Found</h2>
+
+            <p>
+                We couldn't find the requested fitness plan.
+            </p>
+
+            <br>
+
+            <a href="/" class="btn btn-primary">
+                Go Back Home
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <p>
+            © 2026 FitBuddy | AI Fitness Plan Generator
+        </p>
+
+        <p>
+            Stay consistent. Stay healthy. 💪
+        </p>
+
+    </div>
+
+</body>
+</html>

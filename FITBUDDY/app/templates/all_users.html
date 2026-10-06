@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        FitBuddy - Your Fitness Plan
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<main class="container">
+
+
+<header class="topbar">
+
+
+<div class="brand dark-brand">
+
+    Fit<span>Buddy</span>
+
+</div>
+
+
+
+<div>
+
+    <a
+        class="link-btn dark"
+        href="{{ url_for('main.index') }}"
+    >
+        New Plan
+    </a>
+
+
+    <a
+        class="link-btn dark"
+        href="{{ url_for('main.all_users') }}"
+    >
+        Users
+    </a>
+
+</div>
+
+
+</header>
+
+
+
+<section class="card">
+
+
+<h1>
+
+    {{ plan["name"] }}'s Fitness Plan
+
+</h1>
+
+
+
+<div class="stats">
+
+
+<div>
+
+    <b>BMI</b>
+
+    <span>
+        {{ bmi }} — {{ bmi_label }}
+    </span>
+
+</div>
+
+
+
+<div>
+
+    <b>Calories</b>
+
+    <span>
+        {{ plan["calories"] }} kcal
+    </span>
+
+</div>
+
+
+
+<div>
+
+    <b>Protein</b>
+
+    <span>
+        {{ plan["protein_g"] }} g
+    </span>
+
+</div>
+
+
+
+<div>
+
+    <b>Carbohydrates</b>
+
+    <span>
+        {{ plan["carbs_g"] }} g
+    </span>
+
+</div>
+
+
+
+<div>
+
+    <b>Fat</b>
+
+    <span>
+        {{ plan["fat_g"] }} g
+    </span>
+
+</div>
+
+
+</div>
+
+
+
+<div class="user-info">
+
+    <p>
+        <strong>Goal:</strong>
+        {{ plan["goal"].replace("_", " ").title() }}
+    </p>
+
+    <p>
+        <strong>Activity:</strong>
+        {{ plan["activity_level"] }}
+    </p>
+
+    <p>
+        <strong>Workout Days:</strong>
+        {{ plan["workout_days"] }}
+    </p>
+
+    <p>
+        <strong>Equipment:</strong>
+        {{ plan["equipment"].replace("_", " ") }}
+    </p>
+
+    <p>
+        <strong>Diet:</strong>
+        {{ plan["diet"] }}
+    </p>
+
+</div>
+
+
+
+<hr>
+
+
+
+<div class="markdown">
+
+
+{% for line in plan["plan_text"].splitlines() %}
+
+
+    {% if line.startswith("### ") %}
+
+        <h3>
+            {{ line[4:] }}
+        </h3>
+
+
+    {% elif line.startswith("## ") %}
+
+        <h2>
+            {{ line[3:] }}
+        </h2>
+
+
+    {% elif line.startswith("# ") %}
+
+        <h1>
+            {{ line[2:] }}
+        </h1>
+
+
+    {% elif line.startswith("- ") %}
+
+        <p class="bullet">
+            • {{ line[2:] }}
+        </p>
+
+
+    {% elif line.startswith("> ") %}
+
+        <blockquote>
+            {{ line[2:] }}
+        </blockquote>
+
+
+    {% elif line %}
+
+        <p>
+            {{ line }}
+        </p>
+
+
+    {% endif %}
+
+
+{% endfor %}
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+</body>
+
+</html>
